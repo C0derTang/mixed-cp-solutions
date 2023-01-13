@@ -1,5 +1,6 @@
 # mixed-cp-solutions
 
-Answers sorted by website, unsolved questions are marked as unsolved
+CP solutions bank
 
-Currently adding comments and annotations to solutions, WIP
+Currently adding comments and annotations to current solutions, WIP
+adding more solutions
