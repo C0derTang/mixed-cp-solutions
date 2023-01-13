@@ -1,4 +1,7 @@
 '''
+PROBLEM STATEMENT:
+http://www.usaco.org/index.php?page=viewproblem2&cpid=808
+
 LOGIC:
 We can find the number of balls needed by identifying the cows that no one passes to.
 These cows are the ones that MUST start with a ball.
