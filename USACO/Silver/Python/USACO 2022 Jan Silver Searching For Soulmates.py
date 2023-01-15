@@ -1,3 +1,5 @@
+#http://www.usaco.org/index.php?page=viewproblem2&cpid=1182
+
 import sys
 
 input = sys.stdin.readline
