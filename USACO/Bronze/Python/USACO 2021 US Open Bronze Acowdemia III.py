@@ -1,3 +1,5 @@
+# PARTIAL CREDIT: TLE ON TEST CASES 5 AND 9. CPP AND JAVA PASS WITH SAME LOGIC
+
 import sys, io, os
 
 #input = io.BytesIO(os.read(0,os.fstat(0).st_size)).readline
