@@ -1,0 +1,52 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int dist(const pair<int, int> &p1, const pair<int, int> &p2) {
+	int dx = p1.first - p2.first;
+	int dy = p1.second - p2.second;
+	return dx * dx + dy * dy;
+}
+
+bool reachable(int power, const vector<pair<int, int>> &cows) {
+	int start = 0;
+	vector<int> q{start};
+	vector<bool> reached(cows.size());
+	reached[start] = true;
+	while (!q.empty()) {
+		int curr = q.back();
+		q.pop_back();
+		for (int c = 0; c < cows.size(); c++) {
+			if (!reached[c] && dist(cows[curr], cows[c]) <= power) {
+				q.push_back(c);
+				reached[c] = true;
+			}
+		}
+	}
+
+	for (bool c : reached) {
+		if (!c) { return false; }
+	}
+	return true;
+}
+
+int main() {
+	ifstream read("moocast.in");
+	int cow_num;
+	read >> cow_num;
+	vector<pair<int, int>> cows(cow_num);
+	for (pair<int, int> &c : cows) { read >> c.first >> c.second; }
+
+	int low = 0;
+	int high = INT32_MAX;
+	while (low < high) {
+		int mid = (low+high) / 2;
+		if (reachable(mid, cows)) {
+			high = mid;
+		} else {
+			low = mid + 1;
+		}
+	}
+
+	ofstream("moocast.out") << high << endl;
+}
