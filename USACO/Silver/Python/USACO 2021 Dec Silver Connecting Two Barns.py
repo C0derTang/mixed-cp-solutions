@@ -2,9 +2,6 @@ import sys, collections, io, os
 
 input = sys.stdin.readline
 
-def min_cost(a, b):
-	return min((a[0]-b[0])**2, (a[0]-b[1])**2, (a[1]-b[0])**2, (a[1]-b[1])**2)
-
 def solve():
 	n, m = map(int, input().split())
 	adj = [[] for _ in range(n)]
@@ -25,7 +22,7 @@ def solve():
 			cur = stack.pop()
 			pos[cur] = comp_num
 			for a in adj[cur]:
-				if pos[i] == -1:
+				if pos[a] == -1:
 					stack.append(a)
 		comp_num += 1
 
@@ -35,13 +32,32 @@ def solve():
 	comps = [[] for _ in range(comp_num)]
 	for i in range(n):
 		comps[pos[i]].append(i)
-	
 	#print(comps)
+
+	dist1 = [float('inf')]*len(comps)
+	dist2 = [float('inf')]*len(comps)
+
+	barn1 = comps[pos[0]]
+	barn2 = comps[pos[n-1]]
+	p1 = 0
+	for i in range(n):
+		d = abs(barn1[p1]-i)
+		while p1 < len(barn1)-1 and abs(barn1[p1+1]-i) < d:
+			p1 += 1
+		dist1[pos[i]] = min(d, dist1[pos[i]])
+	
+	p2 = 0
+	for i in range(n):
+		d = abs(barn2[p2]-i)
+		while p2 < len(barn2)-1 and abs(barn2[p2+1]-i) < d:
+			p2 += 1
+		dist2[pos[i]] = min(d, dist2[pos[i]])
+
+	ans = float('inf')
+	for i in range(len(comps)):
+		ans = min(ans, dist1[i]**2+dist2[i]**2)
+	print(ans)
 
 
 for i in range(int(input())):
 	solve()
-	if i == 0:
-		print(2)
-	if i == 1:
-		print(1)
