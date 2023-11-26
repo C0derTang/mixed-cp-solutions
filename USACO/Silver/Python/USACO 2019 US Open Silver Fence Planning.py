@@ -1,44 +1,47 @@
-import sys, collections
+import sys
 
 sys.stdin = open('fenceplan.in', 'r')
 sys.stdout = open('fenceplan.out', 'w')
 
 input = sys.stdin.readline
 
-n, m = map(int, input().split())
+class Cow:
+    def __init__(self, x=0, y=0):
+        self.x = x
+        self.y = y
 
-x, y = [0]*n, [0]*n
+n, m = map(int, input().split())
+cows = [Cow() for _ in range(n)]
 for i in range(n):
-    x[i], y[i] = map(int, input().split())
+    cows[i].x, cows[i].y = map(int, input().split())
 
 adj = [[] for _ in range(n)]
 for _ in range(m):
-    c1, c2 = map(int, input().split())
-    adj[c1-1].append(c2-1)
-    adj[c2-1].append(c1-1)
+    a, b = map(int, input().split())
+    adj[a-1].append(b-1)
+    adj[b-1].append(a-1)
 
-#print(adj)
+min_per = float('inf')
 
-ans = sys.maxsize
-visited = set()
+visited = [False]*n
 for i in range(n):
-    if i in visited:
+    if visited[i]:
         continue
-    q = collections.deque([i])
-    minx = miny = sys.maxsize
+    
     maxx = maxy = 0
-    while q:
-        cur = q.pop()
-        if cur in visited:
-            continue
-        visited.add(cur)
-        minx = min(minx, x[cur])
-        miny = min(miny, y[cur])
-        maxx = max(maxx, x[cur])
-        maxy = max(maxy, y[cur])
-
-        for k in adj[cur]:
-            if k not in visited:
-                q.appendleft(k)
-    ans = min(ans, (maxx-minx)*2 + (maxy-miny)*2)
-print(ans)
+    minx = miny = float('inf')
+    stack = [i]
+    while stack:
+        cur = stack.pop()
+        visited[cur] = True
+        maxx = max(maxx, cows[cur].x)
+        minx = min(minx, cows[cur].x)
+        maxy = max(maxy, cows[cur].y)
+        miny = min(miny, cows[cur].y)
+        for j in adj[cur]:
+            if not visited[j]:
+                stack.append(j)
+    
+    min_per = min(min_per, 2*(maxx - minx) + 2*(maxy - miny))
+    
+print(min_per)
