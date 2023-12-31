@@ -4,26 +4,19 @@ input = sys.stdin.readline
 
 def solve():
 	n = int(input())
-	a = [int(i) for i in input().split()]
-	pd = [0]
-	for i, v in enumerate(a):
-		if i%2 == 0:
-			pd.append(pd[-1]+v)
+	s = input().strip()
+	ans = []
+	vowel = 'aeiou'
+	vseen = False
+	for i in range(n-1, -1, -1):
+		ans.append(s[i])
+		if s[i] in vowel:
+			vseen = True
 		else:
-			pd.append(pd[-1]-v)
-
-	first = {}
-	check = False
-	for i, d in enumerate(pd):
-		if d in first:
-			check = True
-			break
-		first[d] = i
-	if check:
-		print('YES')
-	else:
-		print('NO')
-	
+			if vseen:
+				vseen = False
+				ans.append('.')
+	print(''.join(ans[-2::-1]))
 
 for _ in range(int(input())):
 	solve()
