@@ -2,4 +2,9 @@
 
 CP solutions bank
 
-I try to code
+Problems are organized by submission site:
+[USACO](usaco.org)
+[CF](codeforces.com)
+[CSES](cses.fi)
+[USACO Train](usaco.training)
+[YS](judge.yosupo.jp)
