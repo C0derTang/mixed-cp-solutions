@@ -20,11 +20,11 @@ void solve() {
 	}
 
 	int diff = 0;
-	multiset<int> lmao;
+	map<int, int> lmao;
 	for(int i=0; i<n; ++i){
 		if (a[i] != b[i]){
 			++diff;
-			lmao.insert(b[i]);
+			++lmao[b[i]];
 		}
 		if (diff > m ){
 			cout << "NO\n";
@@ -36,15 +36,21 @@ void solve() {
 	bool mod = false;
 	for(auto x: d){
 		if (bash.find(x) != bash.end()){
-			if (lmao.count(x)) lmao.erase(lmao.find(x));
+			if (lmao[x] > 0) --lmao[x];
 			mod = false;
 		}else{
 			mod = true;
 		}
 	}
 
-
-	cout << (mod || !lmao.empty() ? "NO\n" : "YES\n");
+	bool check = false;
+	for(auto x: lmao){
+		if (x.second){
+			check = true;
+			break;
+		}
+	}
+	cout << (mod || check ? "NO\n" : "YES\n");
 
     
 }
