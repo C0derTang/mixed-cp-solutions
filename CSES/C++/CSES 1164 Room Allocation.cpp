@@ -1,53 +1,46 @@
-// messes up tc3
-
 #include <bits/stdc++.h>
 using namespace std;
 
-#define pii pair<int, int>
-#define int long long
-#define FL(i, a, b) for(int i=a; i<b; ++i)
-#define PB push_back
-#define F first
-#define S second
+#define ll long long
+#define MOD(a, b) ((((a) % (b)) + (b)) % (b))
 
-bool cbs(vector<int> a, vector<int> b) {
-    return a[0] > b[0];
-}
-
-struct VectorCompare {
-    bool operator()(const vector<int>& a, const vector<int>& b) const {
-		return a[0] >= b[0];
+struct compare {
+    bool operator()(const pair<int, pair<int, int>> a, const pair<int, pair<int, int>> b) {
+        if (a.first != b.first) return a.first > b.first; 
+        return a.second.first < b.second.first; 
     }
 };
 
 
 signed main() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
+    cin.tie(NULL) -> sync_with_stdio(false);
+    int n; cin >> n;
+    priority_queue<pair<int, pair<int, int>>,vector<pair<int, pair<int, int>>>, compare> pq;
+    set<int> free, taken;
+    for(int i=0; i<n; ++i){
+        int a, b;
+        cin >> a >> b;
+        pq.push({a, {1, i+1}});
+        pq.push({b, {-1, i+1}});
+        free.insert(i+1);
+    }
 
-	int n; cin >> n;
-	priority_queue<vector<int>, vector<vector<int>>, VectorCompare> pq;
-	set<int> available, taken;
-	FL(i, 0, n){
-		int a, b; cin >> a >> b;
-		vector<int> cow = {a, b-a+1, i};
-		pq.push(cow);
-		available.insert(i+1);
-	}
+    int k=0;
+    vector<int> ans(n);
+    while(!pq.empty()){
+        auto cur = pq.top();
+        pq.pop();
+        if(cur.second.first == 1){
+            ans[cur.second.second-1] = *free.begin();
+            taken.insert(*free.begin());
+            free.erase(free.begin());
+        }else{
+            taken.erase(ans[cur.second.second-1]);
+            free.insert(ans[cur.second.second-1]);
+        }
+        k = max(k, (int)taken.size());
+    }
 
-	int ans[n];
-	while (!pq.empty()) {
-		vector<int> cur = pq.top();
-		pq.pop();
-		if (cur[1] != -1){
-			ans[cur[2]] = *available.begin();
-			available.erase(available.begin());
-			vector<int> newv = {cur[0]+cur[1], -1, cur[2]};
-			pq.push(newv);
-		}else{
-			available.insert(ans[cur[2]]);
-		}
-	}
-	cout << *max_element(ans, ans+n) << '\n';
-	FL(i, 0, n) cout << ans[i] << ' ';
+    cout << k << '\n';
+    for(auto x: ans) cout << x << ' ';
 }
