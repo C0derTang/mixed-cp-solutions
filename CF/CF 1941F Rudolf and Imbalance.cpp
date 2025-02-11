@@ -1,59 +1,63 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define int long long
-#define vi vector<int>
-#define pii pair<int, int>
-#define FL(i, a, b) for(int i=a; i<b; ++i)
-#define PB push_back
-#define F first
-#define S second
+#define ll long long
+#define MOD(a, b) ((((a) % (b)) + (b)) % (b))
 
-bool cbs(pii a, pii b) {
+bool cbs(pair<int, int> a, pair<int, int> b) {
     return a.second < b.second;
 }
 
 void solve(){
-	int n, m, k;
+    int n, m, k;
 	cin >> n >> m >> k;
-	vi a(n), d(m), f(k);
-	FL(i, 0, n) cin >> a[i];
-	FL(i, 0, m) cin >> d[i];
-	FL(i, 0, k) cin >> f[i];
-	sort(d.begin(), d.end());
-	sort(f.begin(), f.end());
-
-	int largest = 0, second = 0;
-	int gap = 0;
-	FL(i, 0, n-1){
-		if (a[i+1]-a[i] > largest){
-			second = largest;
-			largest = a[i+1]-a[i];
-			gap = i;
-		} else if(a[i+1]-a[i] > second){
-			second = a[i+1]-a[i];
-		}
+	vector<ll> a(n);
+	set<ll> d, f;
+	for(int i=0; i<n; ++i) cin >> a[i];
+	for(int i=0; i<m; ++i){
+		int x; cin >> x;
+		d.insert(x);
+	}
+	for(int i=0; i<k; ++i){
+		int x; cin >> x;
+		f.insert(x);
 	}
 
-	int ans = largest;
-	for (auto x: d){
-		int l=0, r=k-1;
-		while (l<=r){
-			int mid = (l+r)/2;
-			ans = min(ans, max(a[gap+1] - (f[mid]+x), (f[mid]+x) - a[gap]));
-			if (a[gap+1] - (f[mid]+x) > (f[mid]+x) - a[gap]) l = mid+1;
-			else r = mid-1;
+	ll maxgap = 0, l=0, r=0, secondgap = 0;
+	for(int i=1; i<n; ++i){
+		if (a[i]-a[i-1] > maxgap){
+			l = a[i-1];
+			r = a[i];
+			secondgap = maxgap;
+			maxgap = r-l;
+		}else if (a[i]-a[i-1] > secondgap){
+			secondgap = a[i]-a[i-1];
 		}
 	}
-	cout << max(ans, second) << '\n';
+	ll ans = maxgap;
+	for(auto i: d){
+		auto it = f.lower_bound((r+l)/2 - i);
+		ans = min(ans, max(r-(*it+i), (*it+i)-l));
+		if (it != f.begin()){
+			--it;
+			ans = min(ans, max(r-(*it+i), (*it+i)-l));
+			++it;
+		}
+		++it;
+		if (it != f.end()) ans = min(ans, max(r-(*it+i), (*it+i)-l));
+	}
+	cout << max(ans, secondgap) << '\n';
 
 }
 
 signed main() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-	int t; cin >> t;
-	while(t--){
-		solve();
-	}
+    //freopen("input.in", "r", stdin);
+    //freopen("output.out", "w", stdout);
+
+    cin.tie(NULL) -> sync_with_stdio(false);
+    
+    int t; cin >> t;
+    while(t--){
+        solve();
+    }
 }
