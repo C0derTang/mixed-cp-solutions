@@ -9,7 +9,7 @@ using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statisti
 template <typename T>
 using ordered_multiset = tree<pair<T, long long>, null_type, less<pair<T, long long>>, rb_tree_tag, tree_order_statistics_node_update>;
 
-#define int long long
+#define ll long long
 #define vi vector<int>
 #define vll vector<long long>
 #define pii pair<int, int>
@@ -22,6 +22,16 @@ using ordered_multiset = tree<pair<T, long long>, null_type, less<pair<T, long l
 
 bool cbs(pii a, pii b) {
     return a.second < b.second;
+}
+
+ll fast_pow(ll base, ll exp) {
+    ll result = 1;
+    while (exp > 0) {
+        if (exp % 2 == 1) result *= base;
+        base *= base;
+        exp /= 2;
+    }
+    return result;
 }
 
 struct DSU {

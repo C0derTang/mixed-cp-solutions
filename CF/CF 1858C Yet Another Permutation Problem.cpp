@@ -9,7 +9,18 @@ bool cbs(pair<int, int> a, pair<int, int> b) {
 }
 
 void solve(){
-    
+    int n; cin >> n;
+    vector<bool> seen(n+1);
+    cout << "1 ";
+    for(int i=2; i<=n; ++i){
+        if (seen[i]) continue;
+        for(int j=i; j<=n; j*=2){
+            if (seen[j]) continue;
+            seen[j] = true;
+            cout << j << ' ';
+        }
+    }
+    cout << '\n';
 }
 
 signed main() {
