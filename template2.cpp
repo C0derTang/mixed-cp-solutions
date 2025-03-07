@@ -9,7 +9,7 @@ bool cbs(pair<int, int> a, pair<int, int> b) {
 }
 
 void solve(){
-    
+
 }
 
 signed main() {
