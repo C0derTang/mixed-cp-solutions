@@ -26,7 +26,22 @@ bool cbs(pair<int, int> a, pair<int, int> b) {
 
 
 void solve(){
-    
+    int n, m;
+    cin >> n >> m;
+    queue<int> q;
+    q.push(n);
+    while(!q.empty()){
+        int cur = q.front();
+        if(cur==m){
+            cout << "YES\n";
+            return;
+        }
+        q.pop();
+        if(cur%3) continue;
+        q.push(cur/3);
+        q.push(cur/3*2);
+    }
+    cout << "NO\n";
 }
 
 signed main() {

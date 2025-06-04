@@ -23,10 +23,17 @@ ll modinv(ll a){
 bool cbs(pair<int, int> a, pair<int, int> b) {
     return a.second < b.second;
 }
-
+set<ll> primes;
 
 void solve(){
-    
+    ll l, r; cin >> l >> r;
+    ll rsq = floor(sqrtl(r));
+    ll lsq = floor(sqrtl(l));
+    ll ans = (rsq-lsq+1)*3;
+    for(int i=lsq; i<lsq+3; ++i) if (lsq*i < l) --ans;
+    for(int i=rsq; i<rsq+3; ++i) if (rsq*i > r) --ans;
+
+    cout << ans << '\n';
 }
 
 signed main() {

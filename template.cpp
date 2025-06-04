@@ -14,6 +14,8 @@ using ordered_multiset = tree<pair<T, long long>, null_type, less<pair<T, long l
 #define vll vector<long long>
 #define pii pair<int, int>
 
+const int dulo = 998244353;
+
 #define FOR(i, a, b) for(int i=a; i<b; ++i)
 #define F0R(i, a) for(int i=0; i<a; ++i)
 #define ROF(i, a, b) for(int i=b; i>a-1; --i)
@@ -60,6 +62,14 @@ struct DSU {
 
     bool linked(int x, int y) {return find(x) == find(y);}
 };
+
+vector<ll> powers(1000001);
+
+vector<ll> polyhash(string sr){
+    vector<ll> ret(sr.size()+1);
+    for(int i=0; i<sr.size(); ++i) ret[i+1] = (ret[i]+(sr[i]*powers[i]))%dulo;
+    return ret;
+}
 
 void solve() {
     

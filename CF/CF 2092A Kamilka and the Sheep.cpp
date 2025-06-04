@@ -26,7 +26,16 @@ bool cbs(pair<int, int> a, pair<int, int> b) {
 
 
 void solve(){
-    
+    int n; cin >> n;
+    vector<ll> a(n);
+    for(int i=0; i<n; ++i) cin >> a[i];
+    ll ans=0;
+    for(int i=0; i<n; ++i){
+        for(int j=i+1; j<n; ++j){
+            ans = max(ans, abs(a[i]-a[j]));
+        }
+    }
+    cout << ans << '\n';
 }
 
 signed main() {

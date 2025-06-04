@@ -26,7 +26,17 @@ bool cbs(pair<int, int> a, pair<int, int> b) {
 
 
 void solve(){
-    
+    int n; cin >> n;
+    string s; cin >> s;
+    map<char, int> bash;
+    for(auto x: s) ++bash[x];
+    ll ans = bash.size();
+    for(int i=n-1; i>-1; --i){
+        --bash[s[i]];
+        if(bash[s[i]] == 0) bash.erase(s[i]);
+        ans += bash.size();
+    }
+    cout << ans << '\n';
 }
 
 signed main() {

@@ -26,7 +26,15 @@ bool cbs(pair<int, int> a, pair<int, int> b) {
 
 
 void solve(){
-    
+    int n; cin >> n;
+    vector<ll> a(n);
+    int odds=0;
+    for(int i=0; i<n; ++i){
+        cin >> a[i];
+        odds += a[i]%2;
+    }
+    if(odds==0 || odds==n) cout << *max_element(a.begin(), a.end()) << '\n';
+    else cout << accumulate(a.begin(), a.end(), 0LL) - odds+1 << '\n';
 }
 
 signed main() {

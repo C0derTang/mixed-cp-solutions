@@ -26,7 +26,21 @@ bool cbs(pair<int, int> a, pair<int, int> b) {
 
 
 void solve(){
-    
+    string l, r;
+    cin >> l >> r;
+    ll ans=0;
+    string s;
+    for(int i=0; i<r.size()-l.size(); ++i) s += '0';
+    s += l;
+    bool prev=false;
+    for(int i=0; i<r.size(); ++i){
+        if(prev || (i>0 && r[i-1]!=s[i-1])){
+            ans += 9;
+            prev=true;
+        }
+        else ans += abs((r[i]-'0')-(s[i]-'0'));
+    }
+    cout << ans << '\n';
 }
 
 signed main() {
