@@ -1,13 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define ll long long
+#define int long long
 #define MOD(a, b) ((((a) % (b)) + (b)) % (b))
 
 const int dulo = 998244353;
 
-ll binexp(ll a, ll b){
-    ll ret = 1;
+int binexp(int a, int b){
+    int ret = 1;
     while (b>0){
         if (b&1) ret *= a;
         a *= a;
@@ -16,7 +16,7 @@ ll binexp(ll a, ll b){
     return ret;
 }
 
-ll modinv(ll a){
+int modinv(int a){
     return binexp(a, dulo-2);
 }
 
