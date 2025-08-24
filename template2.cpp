@@ -1,6 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#pragma GCC target ("avx2")
+#pragma GCC optimize ("O3")
+#pragma GCC optimize ("unroll-loops")
+
 #define int long long
 #define MOD(a, b) ((((a) % (b)) + (b)) % (b))
 
